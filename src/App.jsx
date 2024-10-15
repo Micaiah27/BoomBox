@@ -5,7 +5,7 @@ import { ThemeProvider } from './utils/ThemeContext';
 import { css, Global } from '@emotion/react';
 import Footer from './components/footer.component';
 import SignIn from './pages/SignIn';
-import SignUp from './pages/Signup';
+import SignUp from './pages/SignUp';
 import Header from './components/header.component';
 import Dashboard from './pages/Dashboard';
 import PrivateRoutes from './utils/privateRoutes';
