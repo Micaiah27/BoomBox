@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
-import { useTheme } from './ThemeContext'; // Adjust the path as necessary
+import { useTheme } from '../utils/ThemeContext'; // Adjust the path as necessary
 
 const Header = () => {
   const { isDarkMode, toggleDarkMode } = useTheme();

@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { Button, Image } from '@chakra-ui/react';
 import { BeatLoader } from 'react-spinners';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from '../components/ThemeContext'; // Adjust the path if necessary
+import { useTheme } from '../utils/ThemeContext'; // Adjust the path if necessary
 import '../styles/globals.css';
 
 const HomePage = () => {

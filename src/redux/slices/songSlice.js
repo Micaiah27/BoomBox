@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+
 export const songSlice = createSlice({
   name: 'songs',
   initialState: {
@@ -8,15 +9,15 @@ export const songSlice = createSlice({
     error: null,
   },
   reducers: {
-    FETCH_SONGS: (state) => {
+    FETCH_USER_SONGS: (state) => {
       state.loading = true;
       state.error = null;
     },
-    FETCH_SONGS_SUCCESS: (state, action) => {
+    FETCH_USER_SONGS_SUCCESS: (state, action) => {
       state.songs = action.payload;
       state.loading = false;
     },
-    FETCH_SONGS_FAILURE: (state, action) => {
+    FETCH_USER_SONGS_FAILURE: (state, action) => {
       state.error = action.payload;
       state.loading = false;
     },
@@ -39,7 +40,8 @@ export const songSlice = createSlice({
     UPDATE_SONG_SUCCESS: (state, action) => {
       const index = state.songs.findIndex(song => song.$id === action.payload.$id);
       if (index !== -1) {
-        state.songs[index] = action.payload; // Update the song in the array
+        state.songs[index] = action.payload;
+        console.log(state.songs) // Update the song in the array
       }
       state.loading = false;
     },
@@ -63,18 +65,11 @@ export const songSlice = createSlice({
 });
 
 export const {
-  FETCH_SONGS,
-  FETCH_SONGS_SUCCESS,
-  FETCH_SONGS_FAILURE,
-  ADD_SONG,
-  ADD_SONG_SUCCESS,
-  ADD_SONG_FAILURE,
-  UPDATE_SONG,
-  UPDATE_SONG_SUCCESS,
-  UPDATE_SONG_FAILURE,
-  DELETE_SONG,
-  DELETE_SONG_SUCCESS,
-  DELETE_SONG_FAILURE,
+  FETCH_USER_SONGS,FETCH_USER_SONGS_SUCCESS,FETCH_USER_SONGS_FAILURE,
+  ADD_SONG,ADD_SONG_SUCCESS,ADD_SONG_FAILURE,
+  UPDATE_SONG,UPDATE_SONG_SUCCESS,UPDATE_SONG_FAILURE,
+  DELETE_SONG,DELETE_SONG_SUCCESS,DELETE_SONG_FAILURE,
 } = songSlice.actions;
+
 
 export default songSlice.reducer;

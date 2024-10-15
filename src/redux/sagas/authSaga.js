@@ -6,35 +6,42 @@ import {
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAILURE,
   LOGOUT_USER_SUCCESS,
+  REGISTER_USER,
+  LOGIN_USER,
+  GITHUB_LOGIN,
+  LOGOUT_USER,
 } from '../slices/authSlice';
-import { registerUser, loginUser, logoutUser, githubSignIn } from '../../api/authApi';
+
+import { registerUser, loginUser, logoutUser, githubSignIn } from '../../api/authApi'
 
 // Worker Saga for user registration
 function* register(action) {
   try {
     const { name, email, password } = action.payload;
-    const user = yield call(registerUser, email, password, name); // Call the API for registration
-    yield put({ type: REGISTER_USER_SUCCESS, payload: user }); // Dispatch success action
+    const user = yield call(registerUser, email, password, name); 
+    yield put({ type: REGISTER_USER_SUCCESS, payload: user }); 
   } catch (error) {
-    yield put({ type: REGISTER_USER_FAILURE, payload: error.message }); // Dispatch failure action with error message
+    yield put({ type: REGISTER_USER_FAILURE, payload: error.message }); 
   }
 }
 
 // Worker Saga for user login
 function* login(action) {
   try {
+    console.log(action.payload)
     const { email, password } = action.payload;
-    const session = yield call(loginUser, email, password); // Call the API for login
-    yield put({ type: LOGIN_USER_SUCCESS, payload: session }); // Dispatch success action with session details
+    const session = yield call(loginUser, email, password); 
+    console.log(session)// Call the API for login
+    yield put({ type: LOGIN_USER_SUCCESS, payload: session }); 
   } catch (error) {
-    yield put({ type: LOGIN_USER_FAILURE, payload: error.message }); // Dispatch failure action with error message
+    yield put({ type: LOGIN_USER_FAILURE, payload: error.message }); 
   }
 }
 
 // Worker Saga for GitHub sign-in
 function* githubSignInSaga() {
   try {
-    yield call(githubSignIn); // Call the GitHub sign-in function
+    yield call(githubSignIn); 
   } catch (error) {
     console.error(error);
   }
@@ -43,18 +50,20 @@ function* githubSignInSaga() {
 // Worker Saga for user logout
 function* logoutSaga(action) {
   try {
-    const { sessionId } = action.payload; // Extract sessionId from action
-    yield call(logoutUser, sessionId); // Call the API to logout
-    yield put({ type: LOGOUT_USER_SUCCESS }); // Dispatch logout action
+    const { sessionId } = action.payload; 
+    yield call(logoutUser, sessionId); 
+    yield put({ type: LOGOUT_USER_SUCCESS }); 
   } catch (error) {
-    console.error(error); // Handle error (optional)
+    console.error(error); 
   }
 }
 
+
+
 // Watcher Saga
 export default function* authSaga() {
-  yield takeLatest('auth/register', register); // Listen for registration action
-  yield takeLatest('auth/login', login); // Listen for login action
-  yield takeLatest('auth/logout', logoutSaga); // Listen for logout action
-  yield takeLatest('auth/githubSignIn', githubSignInSaga); // Listen for GitHub sign-in action
+  yield takeLatest(REGISTER_USER.type, register); 
+  yield takeLatest(LOGIN_USER.type, login);
+  yield takeLatest(LOGOUT_USER.type, logoutSaga); 
+  yield takeLatest(GITHUB_LOGIN, githubSignInSaga); 
 }

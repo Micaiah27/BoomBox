@@ -1,8 +1,8 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { 
-  FETCH_SONGS, 
-  FETCH_SONGS_SUCCESS, 
-  FETCH_SONGS_FAILURE,
+  FETCH_USER_SONGS, 
+  FETCH_USER_SONGS_SUCCESS, 
+  FETCH_USER_SONGS_FAILURE,
   ADD_SONG, 
   ADD_SONG_SUCCESS, 
   ADD_SONG_FAILURE,
@@ -13,22 +13,25 @@ import {
   DELETE_SONG_SUCCESS,
   DELETE_SONG_FAILURE,
 } from '../slices/songSlice';
-import * as songApi from '../../api/songApi'; // Import the Song API
+import {fetchSongsApi, createSongApi, updateSongApi, deleteSongApi} from '../../api/songApi'; 
 
-// Function to fetch songs
-function* fetchSongs() {
+// Function to fetch songs for the logged-in user
+function* fetchSongs(action) {
   try {
-    const response = yield call(songApi.fetchSongs); // Call the API function
-    yield put(FETCH_SONGS_SUCCESS(response));
+    
+    console.log(action.payload)
+    const response = yield call(fetchSongsApi, action.payload); 
+    yield put(FETCH_USER_SONGS_SUCCESS(response));
   } catch (error) {
-    yield put(FETCH_SONGS_FAILURE(error.message));
+    yield put(FETCH_USER_SONGS_FAILURE(error.message));
   }
 }
 
 // Function to add a song
 function* addSong(action) {
   try {
-    const response = yield call(songApi.addSong, action.payload); // Call the API function
+    const newSongWithId = action.payload;
+    const response = yield call(createSongApi, newSongWithId); 
     yield put(ADD_SONG_SUCCESS(response));
   } catch (error) {
     yield put(ADD_SONG_FAILURE(error.message));
@@ -38,7 +41,8 @@ function* addSong(action) {
 // Function to update a song
 function* updateSong(action) {
   try {
-    const response = yield call(songApi.updateSong, action.payload.$id, action.payload); // Call the API function
+    const updatedSong = action.payload;
+    const response = yield call(updateSongApi, updatedSong); 
     yield put(UPDATE_SONG_SUCCESS(response));
   } catch (error) {
     yield put(UPDATE_SONG_FAILURE(error.message));
@@ -48,7 +52,8 @@ function* updateSong(action) {
 // Function to delete a song
 function* deleteSong(action) {
   try {
-    yield call(songApi.deleteSong, action.payload); // Call the API function
+    const song = action.payload;
+    yield call(deleteSongApi, song); 
     yield put(DELETE_SONG_SUCCESS(action.payload));
   } catch (error) {
     yield put(DELETE_SONG_FAILURE(error.message));
@@ -57,7 +62,7 @@ function* deleteSong(action) {
 
 // Watcher saga for songs
 function* songSaga() {
-  yield takeEvery(FETCH_SONGS, fetchSongs);
+  yield takeEvery(FETCH_USER_SONGS, fetchSongs);
   yield takeEvery(ADD_SONG, addSong);
   yield takeEvery(UPDATE_SONG, updateSong);
   yield takeEvery(DELETE_SONG, deleteSong);
