@@ -1,4 +1,3 @@
-// frontend/src/features/auth/authSaga.js
 import { call, put, takeLatest } from 'redux-saga/effects';
 import {
   REGISTER_USER_SUCCESS,
@@ -31,7 +30,6 @@ function* login(action) {
     console.log(action.payload)
     const { email, password } = action.payload;
     const session = yield call(loginUser, email, password); 
-    console.log(session)// Call the API for login
     yield put({ type: LOGIN_USER_SUCCESS, payload: session }); 
   } catch (error) {
     yield put({ type: LOGIN_USER_FAILURE, payload: error.message }); 
@@ -50,6 +48,7 @@ function* githubSignInSaga() {
 // Worker Saga for user logout
 function* logoutSaga(action) {
   try {
+    
     const { sessionId } = action.payload; 
     yield call(logoutUser, sessionId); 
     yield put({ type: LOGOUT_USER_SUCCESS }); 
@@ -57,8 +56,6 @@ function* logoutSaga(action) {
     console.error(error); 
   }
 }
-
-
 
 // Watcher Saga
 export default function* authSaga() {

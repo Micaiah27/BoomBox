@@ -1,14 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { useRef, useEffect } from 'react';
-import { FaTimes } from 'react-icons/fa'; // Import Font Awesome icon
+import { FaTimes } from 'react-icons/fa'; 
 
 const AddMusicPopup = ({ onClose, onAddMusic, isDarkMode, type, musicData }) => {
   const titleRef = useRef(null);
   const artistRef = useRef(null);
   const albumRef = useRef(null);
   const genreRef = useRef(null);
-  const imageUrlRef = useRef(null); // Change this to refer to an image URL
+  const imageUrlRef = useRef(null); 
 
   // Effect to populate fields if editing
   useEffect(() => {
@@ -17,7 +17,7 @@ const AddMusicPopup = ({ onClose, onAddMusic, isDarkMode, type, musicData }) => 
       artistRef.current.value = musicData.artist;
       albumRef.current.value = musicData.album;
       genreRef.current.value = musicData.genre;
-      imageUrlRef.current.value = musicData.image; // Populate the image URL if editing
+      imageUrlRef.current.value = musicData.image; 
     }
   }, [type, musicData]);
 
@@ -28,9 +28,9 @@ const AddMusicPopup = ({ onClose, onAddMusic, isDarkMode, type, musicData }) => 
       artist: artistRef.current.value,
       album: albumRef.current.value,
       genre: genreRef.current.value,
-      Image: imageUrlRef.current.value, // Use the image URL from the input
+      Image: imageUrlRef.current.value, 
     };
-    onAddMusic(newMusic, type); // Pass the type to the handler
+    onAddMusic(newMusic, type); 
     onClose();
   };
 

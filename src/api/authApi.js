@@ -6,33 +6,24 @@ export const registerUser = async (email, password, name) => {
   const userId = ID.unique();
 
   try {
-    // Register the user
+    // Register a user
     const response = await account.create(userId, email, password, name);
-    //console.log('Registration successful:', response);
-
     // Automatically log the user in after registration
-    const session = await loginUser(email, password);
-    //console.log('Logged in successfully:', session);
-    
-    return response; // You can return the response or session as needed
+    await loginUser(email, password);
+    return response; 
   } catch (error) {
     console.error('Registration failed:', error);
-    throw new Error(error.message); // Rethrow the error for handling
+    throw new Error(error.message); 
   }
 };
 
 // User Login
 export const loginUser = async (email, password) => {
   try {
-    //console.log("Logging in with:", { email, password });
     await logoutUser()
-    // Create a new session with the provided email and password
     const session = await account.createEmailPasswordSession(email, password);
-    //console.log('Session:', session);
-    
     // Store the session ID in localStorage
     localStorage.setItem('appwrite-session', session.$id);
-    //console.log('Session ID:', session.$id); // For debugging
     console.log('Logged in successfully!');
     
     return session; // Return the session object
@@ -47,46 +38,30 @@ export const loginUser = async (email, password) => {
 
 export const githubSignIn = async () => {
   try {
-    // Use createOAuth2Session instead of createOAuth2URL
-    await account.createOAuth2Session(
+    const response = await account.createOAuth2Session(
       'github', 
       'http://localhost:5173',  // Success URL
       'http://localhost:3000'   // Failure URL
     );
     console.log('GitHub sign-in initiated successfully.');
+    console.log('GitHub Signin response: ', response);
   } catch (error) {
     console.error('GitHub sign-in failed:', error);
   }
 };
 
 // User Logout
-// User Logout
 export const logoutUser = async () => {
   try {
       const sessionId = localStorage.getItem('appwrite-session');
       if (!sessionId) {
           console.log('No active session found, cannot log out.');
-          return; // Simply return instead of throwing an error
+          return; 
       }
-
-      // Invalidate the session in Appwrite
-      await account.deleteSession('current'); // Deletes the current logged-in session
-      localStorage.removeItem('appwrite-session'); // Clear session from storage
+      await account.deleteSession('current'); 
+      localStorage.removeItem('appwrite-session'); 
       console.log('Logged out successfully');
   } catch (error) {
       console.error('Logout failed', error);
-  }
-};
-
-
-// Get Logged-in User
-export const getLoggedInUser = async () => {
-  try {
-    const user = await account.get(); // Fetch the logged-in user details
-    //console.log('user: ', user)
-    return user;
-  } catch (error) {
-    console.error('Failed to fetch user data', error);
-    return null; // Return null if no user is logged in
   }
 };

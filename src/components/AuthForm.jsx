@@ -20,6 +20,7 @@ const AuthForm = ({ type }) => {
   const [username, setUsername] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { status, error } = useSelector((state) => state.auth);
+  const user = useSelector((state) => state.auth.user);
 
   const navigate = useNavigate();
 
@@ -39,30 +40,27 @@ const AuthForm = ({ type }) => {
   const isConfirmPasswordError = type === 'signup' && (confirmPassword === '' || confirmPassword !== password);
 
   useEffect(() => {
-    // Handle navigation and loading state based on authentication status
     
-    if (status === 'succeeded') {
+    if (status === 'succeeded' && user!=null) {
       setIsLoading(false);
       console.log("Authentication Successful");
       navigate('/dashboard');
     } else if (status === 'failed') {
       setIsLoading(false);
       console.log("Error", error);
-      // Optionally, display error message to the user
+      
     }
     const timer = setTimeout(() => {
       dispatch(RESET_ERROR());
     }, 3000);
-
-    // Clear the timeout if the component unmounts or status changes
     return () => clearTimeout(timer);
   
-  }, [status, error, navigate, dispatch]);
+  }, [status, error, navigate, dispatch, user]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    setIsLoading(true); // Set loading state to true
+    setIsLoading(true); 
 
     if (type === 'signin') {
       const userInfo = { email, password };
@@ -74,7 +72,7 @@ const AuthForm = ({ type }) => {
   };
 
   const handleGitHubSignIn = async () => {
-    setIsLoading(true); // Set loading state to true
+    setIsLoading(true); 
     dispatch(GITHUB_LOGIN());
   };
 
@@ -120,7 +118,7 @@ const AuthForm = ({ type }) => {
                     User Name
                   </FormLabel>
                   <Input
-                    type="text" /* Changed type to "text" */
+                    type="text" 
                     value={username}
                     onChange={handleUsernameChange}
                     placeholder="User name"

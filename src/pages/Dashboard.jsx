@@ -23,8 +23,6 @@ const Dashboard = () => {
   
   const user = useSelector((state) => state.auth.user);
   
-
-
   const dispatch = useDispatch();
   useEffect(() => {
     if (user) {
@@ -153,6 +151,7 @@ const Dashboard = () => {
 
 // Sidebar Component
 const SideBar = ({ setActiveLink, activeLink }) => {
+  const user = useSelector((state) => state.auth.user);
   const { isDarkMode } = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -164,7 +163,7 @@ const SideBar = ({ setActiveLink, activeLink }) => {
   ];
 
   const handleLogout = () => {
-    dispatch(LOGOUT_USER())
+    dispatch(LOGOUT_USER(user.$id))
     navigate('/')
   }
 
