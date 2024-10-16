@@ -27,7 +27,6 @@ function* register(action) {
 // Worker Saga for user login
 function* login(action) {
   try {
-    console.log(action.payload)
     const { email, password } = action.payload;
     const session = yield call(loginUser, email, password); 
     yield put({ type: LOGIN_USER_SUCCESS, payload: session }); 

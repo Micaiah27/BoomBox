@@ -41,7 +41,6 @@ export const songSlice = createSlice({
       const index = state.songs.findIndex(song => song.$id === action.payload.$id);
       if (index !== -1) {
         state.songs[index] = action.payload;
-        console.log(state.songs) // Update the song in the array
       }
       state.loading = false;
     },

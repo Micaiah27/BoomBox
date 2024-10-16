@@ -18,8 +18,6 @@ import {fetchSongsApi, createSongApi, updateSongApi, deleteSongApi} from '../../
 // Function to fetch songs for the logged-in user
 function* fetchSongs(action) {
   try {
-    
-    console.log(action.payload)
     const response = yield call(fetchSongsApi, action.payload); 
     yield put(FETCH_USER_SONGS_SUCCESS(response));
   } catch (error) {

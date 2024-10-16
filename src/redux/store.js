@@ -36,10 +36,8 @@ const store = configureStore({
   
 });
 
-// Run the root saga
 sagaMiddleware.run(rootSaga);
 
-// Create a persistor
 const persistor = persistStore(store);
 
 export { store, persistor };

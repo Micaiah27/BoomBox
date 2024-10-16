@@ -16,10 +16,10 @@ import { useNavigate } from 'react-router-dom';
 const Dashboard = () => {
   
   const { isDarkMode } = useTheme();
-  const [activeCardIndex, setActiveCardIndex] = useState(null); // State for managing active card
-  const [isPopupOpen, setIsPopupOpen] = useState(false); // State for popup visibility
-  const [currentMusic, setCurrentMusic] = useState(null); // Holds the music being edited or added
-  const [activeLink, setActiveLink] = useState('all'); // Manages active sidebar link
+  const [activeCardIndex, setActiveCardIndex] = useState(null); 
+  const [isPopupOpen, setIsPopupOpen] = useState(false); 
+  const [currentMusic, setCurrentMusic] = useState(null); 
+  const [activeLink, setActiveLink] = useState('all'); 
   
   const user = useSelector((state) => state.auth.user);
   
@@ -43,7 +43,6 @@ const Dashboard = () => {
   // Add or edit music based on the popup type
   const handleEditandAddMusic = (newMusic, type) => {
     const songId = currentMusic?.$id;
-    console.log(currentMusic?.$id)
     const userId = user.userId;
     const newSongWithId = { ...newMusic, userId };
     const updatedSongWithId = {...newMusic, songId}
@@ -93,7 +92,7 @@ const Dashboard = () => {
   }
   artist={
     activeLink === 'all'
-      ? `${music.artist}${music.album ? ` ●  ${music.album}` : ''}` // Add hyphen only if artist exists
+      ? `${music.artist}${music.album ? ` ●  ${music.album}` : ''}` 
       : activeLink === 'artists'
       ? music.genre
       : null
@@ -129,7 +128,7 @@ const Dashboard = () => {
           {rendersongs()}
           <AddMusicCard
             onAdd={() => {
-              setCurrentMusic(null); // Reset for adding new music
+              setCurrentMusic(null); 
               setIsPopupOpen(true);
             }}
             isDarkMode={isDarkMode}

@@ -10,7 +10,6 @@ const AddMusicPopup = ({ onClose, onAddMusic, isDarkMode, type, musicData }) => 
   const genreRef = useRef(null);
   const imageUrlRef = useRef(null); 
 
-  // Effect to populate fields if editing
   useEffect(() => {
     if (type === 'edit' && musicData) {
       titleRef.current.value = musicData.title;

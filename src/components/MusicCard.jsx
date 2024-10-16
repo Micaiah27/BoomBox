@@ -3,31 +3,27 @@ import { css } from '@emotion/react';
 import { FaEllipsisV } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 import { useEffect, useRef, useState } from 'react';
-import { useTheme } from '../utils/ThemeContext'; // Adjust the path if necessary
+import { useTheme } from '../utils/ThemeContext';
 
 const MusicCard = ({ type = 'all',imgSrc, title, artist, album, genre,  onEdit, onDelete }) => {
-  const { isDarkMode } = useTheme(); // Accessing dark mode state
+  const { isDarkMode } = useTheme(); 
   const [showOptions, setShowOptions] = useState(false);
   const optionsRef = useRef(null);
 
-  // Close the options menu when the component is unmounted or on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (optionsRef.current && !optionsRef.current.contains(event.target)) {
-        setShowOptions(false); // Close options menu if clicked outside
+        setShowOptions(false); 
       }
     };
 
-    // Attach the event listener
     document.addEventListener('mousedown', handleClickOutside);
 
-    // Clean up the event listener on unmount
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
-  // Manage body scroll based on the options menu state
   useEffect(() => {
     document.body.style.overflow = showOptions ? 'hidden' : 'auto';
   }, [showOptions]);

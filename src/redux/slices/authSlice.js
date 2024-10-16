@@ -25,8 +25,7 @@ export const authSlice = createSlice({
       state.status = 'loading'; 
       state.error = null;
     },
-    LOGIN_USER_SUCCESS: (state, action) => {
-      console.log(action.payload)
+    LOGIN_USER_SUCCESS: (state, action) => {  
       state.user = action.payload;
       state.status = 'succeeded'; 
     },

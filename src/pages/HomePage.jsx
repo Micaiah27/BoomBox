@@ -3,12 +3,12 @@ import { css } from '@emotion/react';
 import { Button, Image } from '@chakra-ui/react';
 import { BeatLoader } from 'react-spinners';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from '../utils/ThemeContext'; // Adjust the path if necessary
+import { useTheme } from '../utils/ThemeContext'; 
 import '../styles/globals.css';
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const { isDarkMode } = useTheme(); // Use the global theme context for dark mode
+  const { isDarkMode } = useTheme(); 
 
   const handleGetStartedClick = () => {
     navigate('/signup');

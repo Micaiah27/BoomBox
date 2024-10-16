@@ -43,11 +43,10 @@ const AuthForm = ({ type }) => {
     
     if (status === 'succeeded' && user!=null) {
       setIsLoading(false);
-      console.log("Authentication Successful");
       navigate('/dashboard');
     } else if (status === 'failed') {
       setIsLoading(false);
-      console.log("Error", error);
+      
       
     }
     const timer = setTimeout(() => {
